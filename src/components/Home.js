@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   API_URL,
   API_KEY,
@@ -18,15 +18,36 @@ import Spinner from './elements/Spinner';
 // Custom Hook
 import { useHomeFetch } from './hooks/useHomeFetch';
 
+import NoImage from './images/no_image.jpg';
+
 const Home = () => {
   const [{ state, loading, error }, fetchMovies] = useHomeFetch();
-  console.log(state);
+  const [searchTerm, setSearchTerm] = useState('');
 
   return (
     <>
-      <HeroImage />
+      <HeroImage
+        image={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${state.heroImage.backdrop_path}`}
+        title={state.heroImage.original_title}
+        text={state.heroImage.overview}
+      />
       <SearchBar />
-      <Grid />
+      <Grid header={searchTerm ? 'Search Result' : 'Popular Movies'}>
+        {state.movies.map(movie => (
+          <MovieThumb
+            key={movie.id}
+            clickable
+            image={
+              movie.poster_path
+                ? `${IMAGE_BASE_URL}${POSTER_SIZE}${movie.poster_path}`
+                : NoImage
+            }
+            movieId={movie.id}
+            movieName={movie.original_title}
+          />
+        ))}
+      </Grid>{' '}
+      />
       <MovieThumb />
       <Spinner />
       <LoadMoreBtn />
