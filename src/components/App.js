@@ -5,7 +5,7 @@ import Home from './Home';
 
 import { GlobalStyle } from './styles/GlobalStyle';
 
-const App1 = () => (
+const App = () => (
   <>
     <Header />
     <Home />
