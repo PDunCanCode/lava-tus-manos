@@ -18,24 +18,23 @@ export const useHomeFetch = () => {
         ...prev,
         movies:
           isLoadMore !== -1
-        ? [...prev.movies, ...result.results]
-        : [...result.results],
+            ? [...prev.movies, ...result.results]
+            : [...result.results],
         heroImage: prev.heroImage || result.results[0],
         currentPage: result.page,
         totalPages: result.total_pages
-      }))
-
+      }));
     } catch (error) {
       setError(true);
       console.log(error);
     }
     setLoading(false);
-  }
+  };
 
   // Fetch popular movies initially on mount
   useEffect(() => {
     fetchMovies(POPULAR_BASE_URL);
-  }, [])
+  }, []);
 
-  return [{ state, loading, error}, fetchMovies];
-}
+  return [{ state, loading, error }, fetchMovies];
+};
