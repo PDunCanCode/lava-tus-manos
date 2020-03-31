@@ -5,12 +5,12 @@ import Home from './Home';
 
 import { GlobalStyle } from './styles/GlobalStyle';
 
-const App = () => (
+const App1 = () => (
   <>
     <Header />
     <Home />
     <GlobalStyle />
   </>
-)
+);
 
 export default App;
