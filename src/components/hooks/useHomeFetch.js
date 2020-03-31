@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { API_URL, API_KEY } from '../../config';
+import { API_URL, API_KEY} from '../../config';
 
 export const useHomeFetch = () => {
   const [state, setState] = useState({ movies: [] });
@@ -10,16 +10,21 @@ export const useHomeFetch = () => {
     setError(false);
     setLoading(true);
 
+    const isLoadMore = endpoint.search('page');
+
     try {
       const result = await (await fetch(endpoint)).json();
       setState(prev => ({
         ...prev,
-        movies: [...result.results],
+        movies:
+          isLoadMore !== -1
+        ? [...prev.movies, ...result.results]
+        : [...result.results],
         heroImage: prev.heroImage || result.results[0],
         currentPage: result.page,
-        totalPages: result.total_pages,
-      }));
-      
+        totalPages: result.total_pages
+      }))
+
     } catch (error) {
       setError(true);
       console.log(error);
@@ -27,9 +32,10 @@ export const useHomeFetch = () => {
     setLoading(false);
   }
 
+  // Fetch popular movies initially on mount
   useEffect(() => {
     fetchMovies(`${API_URL}movie/popular?api_key=${API_KEY}`);
   }, [])
 
-  return [{ state, loading, error }, fetchMovies];
+  return [{ state, loading, error}, fetchMovies];
 }
