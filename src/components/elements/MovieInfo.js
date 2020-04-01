@@ -8,7 +8,7 @@ import MovieThumb from './MovieThumb';
 
 import { StyledMovieInfo } from '../styles/StyledMovieInfo';
 
-const MovieInfo = ({ movie }) => (
+const MovieInfo = ({ movie, directors }) => (
   <StyledMovieInfo backdrop={movie.backdrop_path}>
     <div className='movieinfo-content'>
       <div className='movieinfo-thumb'>
@@ -19,7 +19,6 @@ const MovieInfo = ({ movie }) => (
               : NoImage
           }
           clickable={false}
-          alt='moviethumb'
         />
       </div>
       <div className='movieinfo-text'>
@@ -33,9 +32,9 @@ const MovieInfo = ({ movie }) => (
             <div className='score'>{movie.vote_average}</div>
           </div>
           <div className='director'>
-            <h3>DIRECTOR{movie.directors.length > 1 ? 'S' : ''}</h3>
-            {movie.directors.map(element => (
-              <p key={element.credit_id}>{element.name}</p>
+            {directors.length > 1 ? <h3>DIRECTORS</h3> : <h3>DIRECTOR</h3>}
+            {directors.map((element, i) => (
+              <p key={i}>{element.name}</p>
             ))}
           </div>
         </div>

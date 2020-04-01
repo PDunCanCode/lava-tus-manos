@@ -3,7 +3,7 @@ import { Link } from '@reach/router';
 
 import { StyledNavigation } from '../styles/StyledNavigation';
 
-const Navigation = () => (
+const Navigation = ({ movie }) => (
   <StyledNavigation>
     <div className='navigation-content'>
       <Link to='/'>
